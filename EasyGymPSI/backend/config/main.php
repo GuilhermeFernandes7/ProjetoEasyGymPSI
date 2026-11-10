@@ -14,6 +14,16 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@app/views' => [
+                        '@app/views', // Procura primeiro nos teus ficheiros locais
+                        '@vendor/hail812/yii2-adminlte3/src/views' // Se não encontrar, usa o tema base
+                    ],
+                ],
+            ],
+        ],
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
