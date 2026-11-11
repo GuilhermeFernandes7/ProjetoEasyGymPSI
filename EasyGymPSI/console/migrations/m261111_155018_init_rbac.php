@@ -4,16 +4,16 @@ use yii\db\Migration;
 
 class m261111_155018_init_rbac extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function safeUp()
     {
         $auth = Yii::$app->authManager;
 
+        // Limpa a base de dados de permissões antigas/duplicadas antes de criar as novas
+        $auth->removeAll();
+
         // --- 1. PERMISSÕES ---
         $loginBackend = $auth->createPermission('loginBackend');
-        $loginBackend->description = 'Aceder ao Back-office (AdminLTE)';
+        $loginBackend->description = 'Aceder ao Back-office';
         $auth->add($loginBackend);
 
         $gerirSocios = $auth->createPermission('gerirSocios');
@@ -30,33 +30,26 @@ class m261111_155018_init_rbac extends Migration
 
 
         // --- 2. ROLES (PAPÉIS) E HIERARQUIA ---
-        // Cliente (Apenas Frontend)
+
+        // Cliente (Acede ao Back-office para ver faturas/planos)
         $cliente = $auth->createRole('cliente');
         $auth->add($cliente);
+        $auth->addChild($cliente, $loginBackend);
 
-        // Rececionista
-        $rececionista = $auth->createRole('rececionista');
-        $auth->add($rececionista);
-        $auth->addChild($rececionista, $loginBackend);
-        $auth->addChild($rececionista, $gerirSocios);
+        // Funcionário / Personal Trainer (Gere sócios e treinos)
+        $funcionario = $auth->createRole('funcionario');
+        $auth->add($funcionario);
+        $auth->addChild($funcionario, $loginBackend);
+        $auth->addChild($funcionario, $gerirSocios);
+        $auth->addChild($funcionario, $gerirTreinos);
 
-        // Personal Trainer
-        $pt = $auth->createRole('personalTrainer');
-        $auth->add($pt);
-        $auth->addChild($pt, $loginBackend);
-        $auth->addChild($pt, $gerirTreinos);
-
-        // Admin (Herda permissões do PT e Rececionista + Gere Sistema)
+        // Admin (Herda tudo do funcionário + Gere o sistema)
         $admin = $auth->createRole('admin');
         $auth->add($admin);
-        $auth->addChild($admin, $pt);
-        $auth->addChild($admin, $rececionista);
+        $auth->addChild($admin, $funcionario);
         $auth->addChild($admin, $gerirSistema);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function safeDown()
     {
         $auth = Yii::$app->authManager;
