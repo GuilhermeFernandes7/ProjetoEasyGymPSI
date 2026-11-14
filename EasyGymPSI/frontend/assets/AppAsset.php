@@ -27,7 +27,6 @@ class AppAsset extends AssetBundle
         'trainer/css/template-bs5.css',
         'trainer/css/trainer-modern.css',
         'css/easygym.css',
-        'css/easygym.css',
     ];
     public $js = [
         'trainer/js/vendor/bootstrap.bundle.min.js',

@@ -23,7 +23,7 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/easygym.css',
+        'css/site.css',
     ];
     public $depends = [
         YiiAsset::class,

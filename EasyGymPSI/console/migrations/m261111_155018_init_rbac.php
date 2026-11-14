@@ -8,8 +8,6 @@ class m261111_155018_init_rbac extends Migration
     {
         $auth = Yii::$app->authManager;
 
-        // Limpa a base de dados de permissões antigas/duplicadas antes de criar as novas
-        $auth->removeAll();
 
         // --- 1. PERMISSÕES ---
         $loginBackend = $auth->createPermission('loginBackend');
@@ -48,6 +46,17 @@ class m261111_155018_init_rbac extends Migration
         $auth->add($admin);
         $auth->addChild($admin, $funcionario);
         $auth->addChild($admin, $gerirSistema);
+
+        // Atribui o role admin ao utilizador "admin" (se existir)
+        $adminId = (new \yii\db\Query())
+            ->select('id')
+            ->from('{{%user}}')
+            ->where(['username' => 'admin'])
+            ->scalar();
+
+        if ($adminId) {
+            $auth->assign($admin, $adminId);
+        }
     }
 
     public function safeDown()

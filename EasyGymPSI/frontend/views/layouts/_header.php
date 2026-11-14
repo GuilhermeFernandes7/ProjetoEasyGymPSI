@@ -9,6 +9,9 @@ use yii\helpers\Html;
 
 $route = Yii::$app->controller->route;
 
+$backendUrl = Yii::$app->params['backendUrl']
+    ?? str_replace('/frontend/web', '/backend/web', rtrim(Yii::$app->request->baseUrl, '/'));
+
 // [rotulo, rota]
 $items = [
     ['Home', 'site/index'],
@@ -34,8 +37,7 @@ $items = [
 
                 <?php if (Yii::$app->user->isGuest): ?>
                     <li class="probootstrap-cta">
-                        <?= Html::a('Login', 'http://localhost/ProjetoEasyGymPSI/EasyGymPSI/backend/web/site/login') ?>
-                    </li>
+                        <?= Html::a('Login', $backendUrl . '/site/login') ?>                    </li>
                 <?php else: ?>
                     <li class="probootstrap-cta">
                         <?= Html::beginForm(['/site/logout'], 'post') ?>
