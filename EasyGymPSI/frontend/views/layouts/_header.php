@@ -13,9 +13,8 @@ $route = Yii::$app->controller->route;
 $items = [
     ['Home', 'site/index'],
     ['Memberships', 'site/memberships'],
-    ['About', 'site/about'],
+    ['About and Contacts', 'site/about'],
     ['Careers', 'site/careers'],
-    ['Contact', 'site/contact'],
 ];
 ?>
 <header role="banner" class="probootstrap-header<?= $solid ? ' probootstrap-header-solid' : '' ?>">
@@ -34,8 +33,8 @@ $items = [
                 <?php endforeach ?>
 
                 <?php if (Yii::$app->user->isGuest): ?>
-                    <li class="probootstrap-cta<?= $route === 'site/login' ? ' active' : '' ?>">
-                        <?= Html::a('Login', ['/site/login']) ?>
+                    <li class="probootstrap-cta">
+                        <?= Html::a('Login', 'http://localhost/ProjetoEasyGymPSI/EasyGymPSI/backend/web/site/login') ?>
                     </li>
                 <?php else: ?>
                     <li class="probootstrap-cta">

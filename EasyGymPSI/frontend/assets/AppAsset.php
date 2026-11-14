@@ -26,7 +26,7 @@ class AppAsset extends AssetBundle
         'trainer/css/icomoon.css',
         'trainer/css/template-bs5.css',
         'trainer/css/trainer-modern.css',
-        'css/site.css',
+        'css/easygym.css',
         'css/easygym.css',
     ];
     public $js = [

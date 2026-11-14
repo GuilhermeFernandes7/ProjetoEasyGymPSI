@@ -25,7 +25,9 @@ $fullWidth = !empty($this->params['fullWidth']);
 <body>
 <?php $this->beginBody() ?>
 
-<?= $this->render('_header', ['solid' => !$fullWidth]) ?>
+<?= $this->render('_header', [
+    'solid' => $this->params['solid'] ?? false
+]) ?>
 
 <?php if ($fullWidth): ?>
     <main id="main" role="main">

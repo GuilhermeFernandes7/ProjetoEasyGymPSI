@@ -1,51 +1,129 @@
 <?php
 
-declare(strict_types=1);
+/* @var $this \yii\web\View */
+/* @var $model \frontend\models\ContactForm */
+use yii\bootstrap5\Html;
+use yii\bootstrap5\ActiveForm;
 
-/** @var yii\web\View $this */
-
-use yii\helpers\Html;
-use yii\helpers\Url;
-
-$this->title = 'About';
-$this->params['fullWidth'] = true;
+$this->title = 'About and Contacts';
 ?>
-<section class="probootstrap-intro probootstrap-intro-inner" style="background-image: url(<?= Url::to('@web/trainer/img/hero_bg_1_b.jpg') ?>);">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-7 probootstrap-intro-text">
-                <h1 class="probootstrap-animate" data-animate-effect="fadeIn">About us</h1>
-                <div class="probootstrap-subtitle probootstrap-animate" data-animate-effect="fadeIn">
-                    <h2><?= Html::encode(Yii::$app->name) ?></h2>
+
+<!-- 1. ESTILOS FORÇADOS (Garante a altura, o fundo escuro e impede o corte do texto) -->
+<style>
+    header.probootstrap-header {
+        position: relative !important;
+        background-color: #141519 !important;
+        min-height: 100px !important;
+        overflow: visible !important;
+        z-index: 999999 !important;
+    }
+    .site-about-fix {
+        padding-top: 30px !important;
+        background-color: #ffffff;
+    }
+</style>
+
+<!-- 2. SCRIPT DE APOIO (Adiciona a classe do teu easygym.css automaticamente) -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var header = document.querySelector('.probootstrap-header');
+        if (header) {
+            header.classList.add('probootstrap-header-solid');
+        }
+    });
+</script>
+
+<div class="container site-about-fix mb-5">
+
+    <!-- Our Mission Section -->
+    <div class="mb-5">
+        <h2>Our mission</h2>
+        <p class="eg-todo">[Mission statement (two or three lines about the gym's purpose and values)]</p>
+
+        <div class="row text-center mt-4">
+            <div class="col-md-4">
+                <div class="card p-4 h-100 shadow-sm">
+                    <h5>[Value 1]</h5>
+                    <p class="mb-0 eg-todo">[Description]</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4 h-100 shadow-sm">
+                    <h5>[Value 2]</h5>
+                    <p class="mb-0 eg-todo">[Description]</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4 h-100 shadow-sm">
+                    <h5>[Value 3]</h5>
+                    <p class="mb-0 eg-todo">[Description]</p>
                 </div>
             </div>
         </div>
     </div>
-    <span class="probootstrap-animate"><a class="probootstrap-scroll-down js-next" href="#next-section">Scroll down <i class="icon-chevron-down"></i></a></span>
-</section>
 
-<section id="next-section" class="probootstrap-section">
-    <div class="container">
-        <div class="row probootstrap-gutter60 mb50">
-            <div class="col-md-6">
-                <figure><img src="<?= Url::to('@web/trainer/img/about_me.jpg') ?>" alt="<?= Html::encode(Yii::$app->name) ?>" class="img-fluid"></figure>
-            </div>
-            <div class="col-md-6">
-                <h2 class="probootstrap-heading">Our mission</h2>
-                <p class="eg-todo">[mission text]</p>
-                <p><?= Html::a('Get in touch', ['/site/contact'], ['class' => 'btn btn-primary']) ?></p>
-            </div>
-        </div>
+    <hr class="my-5">
 
-        <h2 class="probootstrap-heading mb50">Our team</h2>
-        <div class="row">
-            <?php for ($i = 0; $i < 4; $i++): ?>
-                <div class="col-6 col-md-3 mb30">
-                    <div class="eg-avatar"></div>
-                    <h4 class="eg-todo">[name]</h4>
-                    <p class="eg-todo">[role]</p>
+    <!-- Our Team Section -->
+    <div class="mb-5">
+        <h2>Our team</h2>
+        <div class="row mt-4">
+            <?php for($i = 0; $i < 4; $i++): ?>
+                <div class="col-md-3 text-center mb-3">
+                    <div class="eg-avatar d-flex align-items-center justify-content-center mx-auto">
+                        <span class="text-muted">Foto</span>
+                    </div>
+                    <strong>[Name]</strong><br>
+                    <small class="text-muted">Role</small>
                 </div>
-            <?php endfor ?>
+            <?php endfor; ?>
         </div>
     </div>
-</section>
+
+    <hr class="my-5">
+
+    <!-- Contact and Find Us Section -->
+    <div class="row">
+        <!-- Contact Form (Left Column) -->
+        <div class="col-md-6 mb-4">
+            <h2>Contact us</h2>
+            <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
+            <?= $form->field($model, 'name')->textInput(['autofocus' => true, 'placeholder' => 'Full name'])->label(false) ?>
+            <?= $form->field($model, 'email')->textInput(['placeholder' => 'Email'])->label(false) ?>
+            <?= $form->field($model, 'subject')->textInput(['placeholder' => 'Subject'])->label(false) ?>
+            <?= $form->field($model, 'body')->textarea(['rows' => 5, 'placeholder' => 'Message'])->label(false) ?>
+
+            <div class="form-group mt-3">
+                <?= Html::submitButton('Send message', ['class' => 'btn btn-dark w-100', 'name' => 'contact-button']) ?>
+            </div>
+            <?php ActiveForm::end(); ?>
+        </div>
+
+        <!-- Find Us (Right Column) -->
+        <div class="col-md-6 mb-4">
+            <h2>Find us</h2>
+
+            <!-- Map Placeholder -->
+            <div class="bg-light border d-flex align-items-center justify-content-center mb-3 w-100" style="height: 250px;">
+                <span class="text-muted border bg-white p-2">Google Map Area</span>
+            </div>
+
+            <!-- Address Box -->
+            <div class="card mb-3 p-3 shadow-sm">
+                <strong class="mb-1">Easy gym Leiria</strong>
+                <span class="eg-todo">[Address - Street - Zip Code - Location]</span>
+            </div>
+
+            <!-- Operating Hours Box -->
+            <div class="card p-3 shadow-sm">
+                <strong class="mb-2">Operating Hours</strong>
+                <ul class="list-unstyled mb-0 text-muted">
+                    <li>Mon to Fri - [07:00 to 22:00]</li>
+                    <li>Saturday - [09:00 to 18:00]</li>
+                    <li>Sundays - [09:00 to 13:00]</li>
+                    <li>Holidays - [09:00 to 13:00]</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

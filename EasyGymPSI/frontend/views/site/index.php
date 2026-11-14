@@ -21,7 +21,6 @@ $img = static fn (string $file): string => Url::to('@web/trainer/img/' . $file);
                 </div>
                 <p class="mt-4">
                     <?= Html::a('See memberships', ['/site/memberships'], ['class' => 'btn btn-primary btn-lg']) ?>
-                    <?= Html::a('Contact us', ['/site/contact'], ['class' => 'btn btn-ghost btn-ghost-white btn-lg']) ?>
                 </p>
             </div>
         </div>
