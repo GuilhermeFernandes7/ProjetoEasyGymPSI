@@ -11,10 +11,27 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
+    'name' => 'Easy Gym Leiria',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'assetManager' => [
+            'bundles' => [
+                // O template Trainer traz o seu proprio Bootstrap 5.3.8
+                // (ver frontend/assets/AppAsset.php). Anula o do Yii para nao duplicar.
+                \yii\bootstrap5\BootstrapAsset::class => [
+                    'sourcePath' => null,
+                    'css' => [],
+                    'js' => [],
+                ],
+                \yii\bootstrap5\BootstrapPluginAsset::class => [
+                    'sourcePath' => null,
+                    'css' => [],
+                    'js' => [],
+                ],
+            ],
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],

@@ -161,6 +161,26 @@ class SiteController extends Controller
     }
 
     /**
+     * Displays memberships (plans + pre-registration) page.
+     *
+     * @return string
+     */
+    public function actionMemberships(): string
+    {
+        return $this->render('memberships');
+    }
+
+    /**
+     * Displays careers (open roles + application) page.
+     *
+     * @return string
+     */
+    public function actionCareers(): string
+    {
+        return $this->render('careers');
+    }
+
+    /**
      * Displays about page.
      *
      * @return string

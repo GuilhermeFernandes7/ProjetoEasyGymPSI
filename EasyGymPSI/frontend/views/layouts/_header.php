@@ -3,68 +3,51 @@
 declare(strict_types=1);
 
 /** @var yii\web\View $this */
+/** @var bool $solid */
 
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
 use yii\helpers\Html;
 
-$items = [
-    [
-        'label' => 'Home',
-        'url' => ['/site/index'],
-    ],
-    [
-        'label' => 'About',
-        'url' => ['/site/about'],
-    ],
-    [
-        'label' => 'Contact',
-        'url' => ['/site/contact'],
-    ],
-    [
-        'label' => 'Signup',
-        'url' => ['/site/signup'],
-        'visible' => Yii::$app->user->isGuest,
-    ],
-    [
-        'label' => 'Login',
-        'url' => ['/site/login'],
-        'visible' => Yii::$app->user->isGuest,
-    ],
-    [
-        'label' => 'Logout (' . Html::encode(Yii::$app->user->identity?->username) . ')',
-        'url' => ['/site/logout'],
-        'linkOptions' => [
-            'data-method' => 'post',
-            'class' => 'logout',
-        ],
-        'visible' => !Yii::$app->user->isGuest,
-    ],
-];
+$route = Yii::$app->controller->route;
 
+// [rotulo, rota]
+$items = [
+    ['Home', 'site/index'],
+    ['Memberships', 'site/memberships'],
+    ['About', 'site/about'],
+    ['Careers', 'site/careers'],
+    ['Contact', 'site/contact'],
+];
 ?>
-<header id="header">
-    <?php NavBar::begin(
-        [
-            'brandLabel' => Yii::$app->name,
-            'brandUrl' => Yii::$app->homeUrl,
-            'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
-        ],
-    ) ?>
-    <?= Nav::widget(
-        [
-            'options' => ['class' => 'navbar-nav me-auto'],
-            'encodeLabels' => false,
-            'items' => $items,
-        ],
-    ) ?>
-    <?= Html::button(
-        '&#127769;',
-        [
-            'id' => 'theme-toggle',
-            'class' => 'btn btn-link nav-link fs-5',
-            'aria-label' => 'Switch to dark mode',
-        ],
-    ) ?>
-    <?php NavBar::end() ?>
+<header role="banner" class="probootstrap-header<?= $solid ? ' probootstrap-header-solid' : '' ?>">
+    <div class="container-fluid">
+        <?= Html::a(Html::encode(Yii::$app->name) . '<span>.</span>', ['/site/index'], ['class' => 'probootstrap-logo']) ?>
+
+        <a href="#" class="probootstrap-burger-menu d-block d-sm-none"><i>Menu</i></a>
+        <div class="mobile-menu-overlay"></div>
+
+        <nav role="navigation" class="probootstrap-nav d-none d-sm-block">
+            <ul class="probootstrap-main-nav">
+                <?php foreach ($items as [$label, $itemRoute]): ?>
+                    <li<?= $route === $itemRoute ? ' class="active"' : '' ?>>
+                        <?= Html::a(Html::encode($label), ['/' . $itemRoute]) ?>
+                    </li>
+                <?php endforeach ?>
+
+                <?php if (Yii::$app->user->isGuest): ?>
+                    <li class="probootstrap-cta<?= $route === 'site/login' ? ' active' : '' ?>">
+                        <?= Html::a('Login', ['/site/login']) ?>
+                    </li>
+                <?php else: ?>
+                    <li class="probootstrap-cta">
+                        <?= Html::beginForm(['/site/logout'], 'post') ?>
+                        <?= Html::submitButton(
+                            'Logout (' . Html::encode(Yii::$app->user->identity->username) . ')',
+                            ['class' => 'nav-logout'],
+                        ) ?>
+                        <?= Html::endForm() ?>
+                    </li>
+                <?php endif ?>
+            </ul>
+        </nav>
+    </div>
 </header>

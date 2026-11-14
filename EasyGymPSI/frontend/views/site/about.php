@@ -5,29 +5,47 @@ declare(strict_types=1);
 /** @var yii\web\View $this */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'About';
-$this->params['breadcrumbs'][] = $this->title;
-$this->params['meta_description'] = 'Learn more about our Yii2 application and the team behind it.';
-$this->params['meta_keywords'] = 'yii, yii2, about, php, framework';
+$this->params['fullWidth'] = true;
 ?>
-<div class="site-about d-flex align-items-center justify-content-center text-center">
-    <div class="site-about-content mx-auto">
-        <h1 class="display-6 fw-semibold mb-3"><?= Html::encode($this->title) ?></h1>
-
-        <p class="text-body-secondary mb-4">
-            This is the About page. You may modify the following file to customize its content:
-            <?php if (YII_DEBUG): ?>
-                <code class="d-block mt-2"><?= __FILE__ ?></code>
-            <?php endif; ?>
-        </p>
-
-        <?= Html::a(
-            'Go to Homepage',
-            Yii::$app->homeUrl,
-            [
-                'class' => 'btn btn-outline-primary btn-lg',
-            ],
-        ) ?>
+<section class="probootstrap-intro probootstrap-intro-inner" style="background-image: url(<?= Url::to('@web/trainer/img/hero_bg_1_b.jpg') ?>);">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 probootstrap-intro-text">
+                <h1 class="probootstrap-animate" data-animate-effect="fadeIn">About us</h1>
+                <div class="probootstrap-subtitle probootstrap-animate" data-animate-effect="fadeIn">
+                    <h2><?= Html::encode(Yii::$app->name) ?></h2>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+    <span class="probootstrap-animate"><a class="probootstrap-scroll-down js-next" href="#next-section">Scroll down <i class="icon-chevron-down"></i></a></span>
+</section>
+
+<section id="next-section" class="probootstrap-section">
+    <div class="container">
+        <div class="row probootstrap-gutter60 mb50">
+            <div class="col-md-6">
+                <figure><img src="<?= Url::to('@web/trainer/img/about_me.jpg') ?>" alt="<?= Html::encode(Yii::$app->name) ?>" class="img-fluid"></figure>
+            </div>
+            <div class="col-md-6">
+                <h2 class="probootstrap-heading">Our mission</h2>
+                <p class="eg-todo">[mission text]</p>
+                <p><?= Html::a('Get in touch', ['/site/contact'], ['class' => 'btn btn-primary']) ?></p>
+            </div>
+        </div>
+
+        <h2 class="probootstrap-heading mb50">Our team</h2>
+        <div class="row">
+            <?php for ($i = 0; $i < 4; $i++): ?>
+                <div class="col-6 col-md-3 mb30">
+                    <div class="eg-avatar"></div>
+                    <h4 class="eg-todo">[name]</h4>
+                    <p class="eg-todo">[role]</p>
+                </div>
+            <?php endfor ?>
+        </div>
+    </div>
+</section>

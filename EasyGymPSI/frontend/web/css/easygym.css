@@ -1,0 +1,49 @@
+/* Ajustes do Easy Gym sobre o template Trainer. Carregado por ultimo. */
+
+/* Paginas sem "hero" (login, signup, ...): cabecalho escuro e fora do fluxo absoluto */
+.probootstrap-header.probootstrap-header-solid {
+  position: relative;
+  background: #141519 !important;
+}
+
+/* Botao "Login" no menu */
+.probootstrap-main-nav li.probootstrap-cta a {
+  border: 2px solid #fff;
+  border-radius: 999px;
+  padding: 6px 18px;
+}
+.probootstrap-main-nav li.probootstrap-cta a::after { display: none; }
+.probootstrap-main-nav li.probootstrap-cta a:hover {
+  background: #fff;
+  color: #141519 !important;
+}
+
+/* Botao "Logout" (formulario POST) com o aspeto de uma ligacao do menu */
+.probootstrap-main-nav li form { display: inline; margin: 0; }
+.probootstrap-main-nav li button.nav-logout {
+  background: transparent;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  padding: 6px 18px;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: .2em;
+  cursor: pointer;
+}
+.probootstrap-main-nav li button.nav-logout:hover {
+  background: #fff;
+  color: #141519;
+}
+
+/* Texto por preencher */
+.eg-todo { opacity: .6; font-style: italic; }
+
+/* Cartoes de equipa (placeholders) */
+.eg-avatar {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #ececf0;
+  border-radius: 14px;
+  margin-bottom: 12px;
+}

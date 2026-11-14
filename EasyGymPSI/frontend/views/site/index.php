@@ -5,205 +5,100 @@ declare(strict_types=1);
 /** @var yii\web\View $this */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
-$this->title = 'My Yii Application';
-$this->params['meta_description'] = 'A high-performance PHP framework best for developing web applications. Fast, secure, and professional.';
-$this->params['meta_keywords'] = 'yii, yii2, php, framework, web application, high-performance';
+$this->title = 'Home';
+$this->params['fullWidth'] = true;
+$img = static fn (string $file): string => Url::to('@web/trainer/img/' . $file);
 ?>
-<div class="site-index">
-
-    <!-- Hero banner with Yii gradient -->
-    <div class="hero-banner text-white rounded-4 p-5 mb-4 position-relative overflow-hidden">
-        <?= Html::img(Yii::getAlias('@web/images/yii3_full_white_for_dark.svg'), [
-            'alt' => '',
-            'class' => 'd-none d-lg-block position-absolute hero-logo',
-        ]) ?>
-        <div class="position-relative">
-            <h1 class="display-5 fw-bold mb-3">Build with Yii Framework</h1>
-            <p class="lead opacity-75 mb-4 hero-lead">
-                A high-performance PHP framework best for developing web applications.
-                Fast, secure, and professional.
-            </p>
-            <div class="d-flex gap-2 flex-wrap">
-                <?= Html::a(
-                    'Get Started',
-                    'https://www.yiiframework.com/doc/guide/2.0/en/start-installation',
-                    [
-                        'class' => 'btn btn-light btn-lg fw-semibold px-4',
-                        'rel' => 'noopener',
-                        'target' => '_blank',
-                    ],
-                ) ?>
-                <?= Html::a(
-                    'API Reference',
-                    'https://www.yiiframework.com/doc/api/2.0',
-                    [
-                        'class' => 'btn btn-outline-light btn-lg px-4',
-                        'rel' => 'noopener',
-                        'target' => '_blank',
-                    ],
-                ) ?>
+<section class="probootstrap-intro" style="background-image: url(<?= $img('hero_bg_1_b.jpg') ?>);">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 probootstrap-intro-text">
+                <h1 class="probootstrap-animate" data-animate-effect="fadeIn"><span>Easy Gym</span> Leiria</h1>
+                <div class="probootstrap-subtitle probootstrap-animate" data-animate-effect="fadeIn">
+                    <h2>Train with us</h2>
+                </div>
+                <p class="mt-4">
+                    <?= Html::a('See memberships', ['/site/memberships'], ['class' => 'btn btn-primary btn-lg']) ?>
+                    <?= Html::a('Contact us', ['/site/contact'], ['class' => 'btn btn-ghost btn-ghost-white btn-lg']) ?>
+                </p>
             </div>
         </div>
     </div>
+    <span class="probootstrap-animate"><a class="probootstrap-scroll-down js-next" href="#next-section">Scroll down <i class="icon-chevron-down"></i></a></span>
+</section>
 
-    <!-- Extensions grid -->
-    <div class="row g-3">
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-0 shadow-sm rounded-3 extension-card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <span class="extension-icon">&#128270;</span>
-                        <h3 class="h6 fw-bold mb-0 ms-2">yii2-debug</h3>
-                    </div>
-                    <p class="text-body-secondary small mb-0">
-                        Debug toolbar and debugger for Yii2. Inspect logs, database queries,
-                        request data, and application performance in real time.
-                    </p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pt-0">
-                    <?= Html::a(
-                        'Learn more &raquo;',
-                        'https://www.yiiframework.com/extension/yiisoft/yii2-debug',
-                        [
-                            'class' => 'btn btn-sm btn-outline-secondary',
-                            'rel' => 'noopener',
-                            'target' => '_blank',
-                        ],
-                    ) ?>
-                </div>
+<section id="next-section" class="probootstrap-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="probootstrap-heading mt0 mb50">What we offer</h2>
             </div>
         </div>
-
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-0 shadow-sm rounded-3 extension-card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <span class="extension-icon">&#9881;</span>
-                        <h3 class="h6 fw-bold mb-0 ms-2">yii2-gii</h3>
-                    </div>
-                    <p class="text-body-secondary small mb-0">
-                        Automatic code generator for models, controllers, CRUD, forms, and modules.
-                        Boost your productivity with scaffolding.
-                    </p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pt-0">
-                    <?= Html::a(
-                        'Learn more &raquo;',
-                        'https://www.yiiframework.com/extension/yiisoft/yii2-gii',
-                        [
-                            'class' => 'btn btn-sm btn-outline-secondary',
-                            'rel' => 'noopener',
-                            'target' => '_blank',
-                        ],
-                    ) ?>
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb30">
+                <div class="probootstrap-program">
+                    <a href="<?= Url::to(['/site/memberships']) ?>"><img src="<?= $img('img_1.jpg') ?>" alt="Group classes" class="img-fluid rounded"></a>
+                    <h3>Group classes</h3>
+                    <p>Book your spot online.</p>
+                    <p class="eg-todo">[description]</p>
                 </div>
             </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-0 shadow-sm rounded-3 extension-card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <span class="extension-icon">&#128203;</span>
-                        <h3 class="h6 fw-bold mb-0 ms-2">yii2-queue</h3>
-                    </div>
-                    <p class="text-body-secondary small mb-0">
-                        Asynchronous job queue with support for DB, Redis, AMQP, Beanstalk,
-                        and SQS drivers. Run background tasks with ease.
-                    </p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pt-0">
-                    <?= Html::a(
-                        'Learn more &raquo;',
-                        'https://www.yiiframework.com/extension/yiisoft/yii2-queue',
-                        [
-                            'class' => 'btn btn-sm btn-outline-secondary',
-                            'rel' => 'noopener',
-                            'target' => '_blank',
-                        ]
-                    ) ?>
+            <div class="col-md-6 col-lg-3 mb30">
+                <div class="probootstrap-program">
+                    <a href="<?= Url::to(['/site/memberships']) ?>"><img src="<?= $img('img_2.jpg') ?>" alt="Personal training" class="img-fluid rounded"></a>
+                    <h3>Personal training</h3>
+                    <p>Follow-up by a personal trainer.</p>
+                    <p class="eg-todo">[description]</p>
                 </div>
             </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-0 shadow-sm rounded-3 extension-card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <span class="extension-icon">&#9889;</span>
-                        <h3 class="h6 fw-bold mb-0 ms-2">yii2-redis</h3>
-                    </div>
-                    <p class="text-body-secondary small mb-0">
-                        Redis integration providing cache, session, and ActiveRecord support.
-                        Leverage in-memory storage for blazing-fast data access.
-                    </p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pt-0">
-                    <?= Html::a(
-                        'Learn more &raquo;',
-                        'https://www.yiiframework.com/extension/yiisoft/yii2-redis',
-                        [
-                            'class' => 'btn btn-sm btn-outline-secondary',
-                            'rel' => 'noopener',
-                            'target' => '_blank',
-                        ]
-                    ) ?>
+            <div class="col-md-6 col-lg-3 mb30">
+                <div class="probootstrap-program">
+                    <a href="<?= Url::to(['/site/memberships']) ?>"><img src="<?= $img('img_3.jpg') ?>" alt="Workout plans" class="img-fluid rounded"></a>
+                    <h3>Workout plans</h3>
+                    <p>A plan made for you.</p>
+                    <p class="eg-todo">[description]</p>
                 </div>
             </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-0 shadow-sm rounded-3 extension-card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <span class="extension-icon">&#128269;</span>
-                        <h3 class="h6 fw-bold mb-0 ms-2">yii2-elasticsearch</h3>
-                    </div>
-                    <p class="text-body-secondary small mb-0">
-                        Elasticsearch integration with ActiveRecord and query builder.
-                        Add powerful full-text search capabilities to your application.
-                    </p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pt-0">
-                    <?= Html::a(
-                        'Learn more &raquo;',
-                        'https://www.yiiframework.com/extension/yiisoft/yii2-elasticsearch',
-                        [
-                            'class' => 'btn btn-sm btn-outline-secondary',
-                            'rel' => 'noopener',
-                            'target' => '_blank',
-                        ]
-                    ) ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-0 shadow-sm rounded-3 extension-card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <span class="extension-icon">&#9993;</span>
-                        <h3 class="h6 fw-bold mb-0 ms-2">yii2-symfonymailer</h3>
-                    </div>
-                    <p class="text-body-secondary small mb-0">
-                        Email sending integration powered by Symfony Mailer.
-                        Compose and deliver rich HTML emails with attachments and templates.
-                    </p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pt-0">
-                    <?= Html::a(
-                        'Learn more &raquo;',
-                        'https://github.com/yiisoft/yii2-symfonymailer',
-                        [
-                            'class' => 'btn btn-sm btn-outline-secondary',
-                            'rel' => 'noopener',
-                            'target' => '_blank',
-                        ]
-                    ) ?>
+            <div class="col-md-6 col-lg-3 mb30">
+                <div class="probootstrap-program">
+                    <a href="<?= Url::to(['/site/memberships']) ?>"><img src="<?= $img('img_4.jpg') ?>" alt="Physical evaluations" class="img-fluid rounded"></a>
+                    <h3>Physical evaluations</h3>
+                    <p>Track your progress.</p>
+                    <p class="eg-todo">[description]</p>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-</div>
+<section class="probootstrap-section probootstrap-section-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="probootstrap-heading mt0 mb50">Why train with us</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="probootstrap-box">
+                    <h4>Book online</h4>
+                    <p>Reserve your group classes and PT evaluations from the member area.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="probootstrap-box">
+                    <h4>Your plan, always with you</h4>
+                    <p>Consult your workout plan and your membership details.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="probootstrap-box">
+                    <h4>Stay informed</h4>
+                    <p>Receive notifications about your classes and evaluations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

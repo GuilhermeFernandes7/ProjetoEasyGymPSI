@@ -1,0 +1,220 @@
+/* ============================================================
+   Trainer — modern design layer (2026)
+   Energetic personal-trainer refresh over the existing markup.
+   Loaded LAST so it wins. No markup changes. Keeps it simple.
+   ============================================================ */
+
+:root {
+  --bg: #ffffff;
+  --text: #16181d;
+  --muted: #5f6772;
+  --faint: #9aa1ac;
+  --line: #ececf0;
+  --line-strong: #e0e2e8;
+  --accent: #e8341c;            /* energetic red */
+  --accent-hover: #c22711;
+  --ink: #141519;              /* near-black footer */
+  --radius: 14px;
+  --radius-sm: 9px;
+  --shadow: 0 1px 2px rgba(16,24,40,.05), 0 12px 30px rgba(16,24,40,.08);
+  --shadow-hover: 0 20px 44px rgba(16,24,40,.16);
+  --maxw: 1180px;
+}
+
+/* ---------- base ---------- */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #545c66;
+  background: var(--bg);
+  font-size: 17px;
+  line-height: 1.72;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, .heading-with-icon {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 1.2;
+}
+a { color: inherit; text-decoration: none; transition: color .2s ease; }
+a:hover, a:focus, a:active { color: var(--accent); text-decoration: none; }
+img { max-width: 100%; height: auto; }
+::selection { background: var(--accent); color: #fff; }
+::-moz-selection { background: var(--accent); color: #fff; }
+
+/* ---------- buttons ---------- */
+.btn { border-radius: 999px; font-weight: 600; letter-spacing: .01em; }
+.btn.btn-primary,
+input[type="submit"].btn-primary {
+  background: var(--accent); border: 2px solid var(--accent); color: #fff;
+  padding-left: 26px; padding-right: 26px;
+  box-shadow: 0 8px 20px rgba(232,52,28,.22);
+}
+.btn.btn-primary:hover, .btn.btn-primary:focus, .btn.btn-primary:active {
+  background: var(--accent-hover); border-color: var(--accent-hover); color: #fff;
+  box-shadow: 0 10px 24px rgba(232,52,28,.32);
+}
+.btn.btn-ghost { border-radius: 999px; border-color: var(--accent); color: var(--accent); }
+.btn.btn-ghost:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* ---------- header / nav ---------- */
+.probootstrap-header {
+  background: linear-gradient(to bottom, rgba(10,11,14,.42), rgba(10,11,14,0));
+  padding-top: 26px; padding-bottom: 26px;
+}
+.probootstrap-header:hover, .probootstrap-header:focus, .probootstrap-header:active {
+  background: linear-gradient(to bottom, rgba(10,11,14,.6), rgba(10,11,14,.08));
+}
+.probootstrap-logo { color: #fff; font-weight: 800; letter-spacing: .04em; }
+.probootstrap-logo span { color: var(--accent); }
+.probootstrap-main-nav li a {
+  color: #fff; font-weight: 600; font-size: 13px; letter-spacing: .14em;
+}
+.probootstrap-header-social li a { color: rgba(255,255,255,.85); }
+.probootstrap-header-social li a:hover { color: var(--accent); }
+
+/* desktop nav: animated red accent underline (replaces the white border) */
+@media (min-width: 768px) {
+  .probootstrap-header .probootstrap-main-nav li a {
+    position: relative; display: inline-block; padding: 6px 0;
+    border-bottom: none !important;
+  }
+  .probootstrap-header .probootstrap-main-nav li a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left;
+    transition: transform .22s ease;
+  }
+  .probootstrap-header .probootstrap-main-nav li a:hover::after,
+  .probootstrap-header .probootstrap-main-nav li.active a::after { transform: scaleX(1); }
+  .probootstrap-header .probootstrap-main-nav li a:hover,
+  .probootstrap-header .probootstrap-main-nav li.active a { color: #fff; }
+}
+
+/* ---------- HERO: dark gradient scrim + white type (scoped to .probootstrap-intro ONLY) ---------- */
+.probootstrap-intro::after {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    linear-gradient(105deg, rgba(14,15,19,.82) 0%, rgba(14,15,19,.5) 40%, rgba(14,15,19,.12) 100%),
+    linear-gradient(to top, rgba(14,15,19,.7) 0%, rgba(14,15,19,0) 34%);
+}
+.probootstrap-intro > .container, .probootstrap-intro > .container-fluid { z-index: 3; }
+.probootstrap-intro .probootstrap-scroll-down { z-index: 4; color: #fff; }
+.probootstrap-intro .probootstrap-scroll-down:hover { color: var(--accent); }
+.probootstrap-intro h1 { color: #fff; text-shadow: 0 2px 24px rgba(0,0,0,.28); }
+.probootstrap-intro h1 span { color: #fff; }
+.probootstrap-intro .probootstrap-subtitle h2,
+.probootstrap-intro .probootstrap-subtitle .heading-with-icon { color: #fff; }
+.probootstrap-intro .probootstrap-subtitle h2 a { color: #fff; }
+.probootstrap-intro .probootstrap-subtitle h2 a:hover { color: var(--accent); }
+.probootstrap-intro .probootstrap-subtitle h2:before,
+.probootstrap-intro .probootstrap-subtitle .heading-with-icon:before {
+  background: var(--accent); width: 56px; height: 3px;
+}
+
+/* ---------- section headings: red accent bar ---------- */
+.probootstrap-heading { font-weight: 800; letter-spacing: -.015em; }
+.probootstrap-heading:after { background: var(--accent); width: 56px; height: 3px; }
+
+/* ---------- program cards (owl scroll-snap items) ---------- */
+.owl-carousel { padding: 6px 2px 26px; }
+.probootstrap-program {
+  background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+  overflow: hidden; height: 100%;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.probootstrap-program:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+.probootstrap-program > a { display: block; overflow: hidden; }
+.probootstrap-program > a img {
+  width: 100%; display: block; border-radius: 0 !important;
+  transition: transform .55s ease;
+}
+.probootstrap-program:hover > a img { transform: scale(1.06); }
+.probootstrap-program h3 {
+  padding: 18px 22px 0; margin: 0 0 6px; font-size: 21px; line-height: 1.25;
+}
+.probootstrap-program p { padding: 0 22px; margin-bottom: 8px; font-size: 15px; }
+.probootstrap-program h3 + p {
+  color: var(--accent); font-weight: 700; font-size: 12.5px;
+  letter-spacing: .05em; text-transform: uppercase;
+}
+.probootstrap-program p:last-child { padding-bottom: 22px; color: var(--muted); }
+
+/* carousel arrows → tidy circular buttons */
+.probootstrap-owl-navigation li a {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 42px; height: 42px; border-radius: 50%; font-size: 20px;
+  border: 1px solid var(--line-strong); color: var(--muted); margin-left: 6px;
+  transition: all .2s ease;
+}
+.probootstrap-owl-navigation li a:hover {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+}
+
+/* ---------- "Upcoming Events" blog list ---------- */
+.probootstrap-blog-list li a .probootstrap-image { width: 92px; }
+.probootstrap-blog-list li a .probootstrap-image img {
+  border-radius: var(--radius-sm); width: 92px; height: 70px; object-fit: cover;
+}
+.probootstrap-blog-list li a .probootstrap-text h4 { font-size: 16px; font-weight: 700; color: var(--text); }
+.probootstrap-blog-list li a .probootstrap-text .meta { color: var(--faint); font-size: 13px; margin-top: 4px; }
+.probootstrap-blog-list li a:hover h4 { color: var(--accent); }
+
+/* small section sub-headings (My Mission / My Vision …) */
+.probootstrap-section h4 { color: var(--text); font-weight: 700; }
+
+/* ---------- about / gallery images ---------- */
+figure:not(.probootstrap-image) > img.img-fluid { border-radius: var(--radius); box-shadow: var(--shadow); }
+.image-popup {
+  display: block; overflow: hidden; border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.image-popup img { border-radius: 0 !important; box-shadow: none !important; width: 100%; display: block; transition: transform .55s ease; }
+.image-popup:hover img { transform: scale(1.06); }
+
+/* ---------- contact form ---------- */
+.probootstrap-form .form-control {
+  border-radius: var(--radius-sm); border: 1px solid var(--line-strong);
+  background: #fbfbfc;
+}
+.probootstrap-form .form-control:focus {
+  border-color: var(--accent); background: #fff;
+  box-shadow: 0 0 0 3px rgba(232,52,28,.15);
+}
+.probootstrap-form label { font-weight: 600; color: var(--text); font-size: 14px; }
+.probootstrap-contact-info li i { color: var(--accent); }
+
+/* ---------- footer: polished near-black ---------- */
+.probootstrap-footer { background: var(--ink); color: #aeb4bf; }
+.probootstrap-footer .probootstrap-footer-widget h4 {
+  color: #fff; position: relative; padding-bottom: 14px; margin-bottom: 22px;
+  font-size: 17px; letter-spacing: .01em;
+}
+.probootstrap-footer .probootstrap-footer-widget h4::after {
+  content: ""; position: absolute; left: 0; bottom: 0; width: 34px; height: 3px;
+  background: var(--accent); border-radius: 2px;
+}
+.probootstrap-footer a { color: #aeb4bf !important; border-bottom: none !important; }
+.probootstrap-footer a:hover { color: #fff !important; border-bottom: none !important; }
+.probootstrap-footer .probootstrap-footer-link li { line-height: 2; }
+.probootstrap-footer .probootstrap-contact-info li i { color: var(--accent); }
+.probootstrap-footer .border-top { border-top-color: rgba(255,255,255,.1) !important; }
+.probootstrap-footer .probootstrap-backtotop a {
+  background: var(--accent); color: #fff !important;
+  box-shadow: 0 10px 24px rgba(232,52,28,.4); border: none !important;
+}
+.probootstrap-footer .probootstrap-backtotop a:hover,
+.probootstrap-footer .probootstrap-backtotop a:focus,
+.probootstrap-footer .probootstrap-backtotop a:active { background: var(--accent-hover); color: #fff !important; }
+
+/* ---------- defensive Bootstrap-5 .media flex shim (unused here, kept for safety) ---------- */
+.media { display: flex; align-items: flex-start; }
+.media > .media-left, .media > .pull-left { flex-shrink: 0; margin-right: 16px; }
+.media > .media-body { flex: 1; min-width: 0; }
+.media .media-object { width: 92px; height: 70px; object-fit: cover; border-radius: var(--radius-sm); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 767.98px) {
+  body { font-size: 16px; }
+  .probootstrap-program h3 { font-size: 19px; }
+}
