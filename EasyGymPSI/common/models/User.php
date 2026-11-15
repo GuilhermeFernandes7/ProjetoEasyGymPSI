@@ -30,6 +30,8 @@ class User extends ActiveRecord implements IdentityInterface
     public const STATUS_DELETED = 0;
     public const STATUS_INACTIVE = 9;
     public const STATUS_ACTIVE = 10;
+    public const STATUS_SUSPENDED = 7;
+    public const STATUS_PENDING = 8;
     /**
      * {@inheritdoc}
      */
@@ -55,8 +57,66 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['status', 'in', 'range' => [
+                self::STATUS_ACTIVE,
+                self::STATUS_INACTIVE,
+                self::STATUS_PENDING,
+                self::STATUS_SUSPENDED,
+                self::STATUS_DELETED,
+            ]],
         ];
+    }
+    /**
+     * Estados mostrados no back-office (o "Deleted" nao aparece: e o soft delete).
+     */
+    public static function statusLabels(): array
+    {
+        return [
+            self::STATUS_ACTIVE => 'Active',
+            self::STATUS_PENDING => 'Pending',
+            self::STATUS_SUSPENDED => 'Suspended',
+            self::STATUS_INACTIVE => 'Inactive',
+        ];
+    }
+
+    public function getStatusLabel(): string
+    {
+        return self::statusLabels()[$this->status] ?? 'Deleted';
+    }
+
+    public function getPerfil(): \yii\db\ActiveQuery
+    {
+        return $this->hasOne(PerfilUtilizador::class, ['user_id' => 'id']);
+    }
+
+    public function getRoleName(): ?string
+    {
+        $roles = Yii::$app->authManager->getRolesByUser($this->id);
+
+        return $roles ? array_key_first($roles) : null;
+    }
+
+    /**
+     * Soft delete: nunca apaga a linha (as FK em cascata apagariam perfil, inscricoes e faturas).
+     */
+    public function softDelete(): bool
+    {
+        $this->status = self::STATUS_DELETED;
+
+        return $this->save(false, ['status', 'updated_at']);
+    }
+    public function deactivate(): bool
+    {
+        $this->status = self::STATUS_INACTIVE;
+
+        return $this->save(false, ['status', 'updated_at']);
+    }
+
+    public function activate(): bool
+    {
+        $this->status = self::STATUS_ACTIVE;
+
+        return $this->save(false, ['status', 'updated_at']);
     }
 
     /**

@@ -14,6 +14,11 @@ $items = [
         'url' => ['/site/index'],
     ],
     [
+            'label' => 'Users and access',
+            'url' => ['/user/index'],
+            'visible' => Yii::$app->user->can('gerirSistema'),
+    ],
+    [
         'label' => 'Login',
         'url' => ['/site/login'],
         'visible' => Yii::$app->user->isGuest,

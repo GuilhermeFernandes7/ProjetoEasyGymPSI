@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $perfil_id
  * @property int $user_id
+ * @property string|null $nome
  * @property string|null $nif
  * @property string|null $telefone
  * @property string|null $morada
@@ -41,10 +42,11 @@ class PerfilUtilizador extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nif', 'telefone', 'morada', 'data_nascimento'], 'default', 'value' => null],
+            [['nome', 'nif', 'telefone', 'morada', 'data_nascimento'], 'default', 'value' => null],
             [['user_id'], 'required'],
             [['user_id'], 'integer'],
             [['data_nascimento'], 'safe'],
+            [['nome'], 'string', 'max' => 100],
             [['nif'], 'string', 'max' => 9],
             [['telefone'], 'string', 'max' => 20],
             [['morada'], 'string', 'max' => 200],
@@ -61,6 +63,7 @@ class PerfilUtilizador extends \yii\db\ActiveRecord
         return [
             'perfil_id' => 'Perfil ID',
             'user_id' => 'User ID',
+            'nome' => 'Nome',
             'nif' => 'Nif',
             'telefone' => 'Telefone',
             'morada' => 'Morada',
