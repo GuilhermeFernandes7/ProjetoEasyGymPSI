@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace frontend\controllers;
 
 use common\models\LoginForm;
+use frontend\models\RegistrationForm;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
@@ -165,19 +166,32 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionMemberships(): string
+    public function actionMemberships(): string|Response
     {
-        return $this->render('memberships');
+        $model = new RegistrationForm();
+        $model->role = 'cliente';
+
+        if ($model->load(Yii::$app->request->post()) && $model->register()) {
+            Yii::$app->session->setFlash('success', 'Pre-registration received. Your account will be activated after approval by our team.');
+
+            return $this->redirect(['memberships', '#' => 'pre-registration']);
+        }
+
+        return $this->render('memberships', ['model' => $model]);
     }
 
-    /**
-     * Displays careers (open roles + application) page.
-     *
-     * @return string
-     */
-    public function actionCareers(): string
+    public function actionCareers(): string|Response
     {
-        return $this->render('careers');
+        $model = new RegistrationForm();
+        $model->role = 'funcionario';
+
+        if ($model->load(Yii::$app->request->post()) && $model->register()) {
+            Yii::$app->session->setFlash('success', 'Application received. Your account will be activated after approval by our team.');
+
+            return $this->redirect(['careers', '#' => 'apply']);
+        }
+
+        return $this->render('careers', ['model' => $model]);
     }
 
     /**
@@ -197,6 +211,7 @@ class SiteController extends Controller
      */
     public function actionSignup(): string|Response
     {
+        return $this->redirect(['memberships']);
         $model = new SignupForm();
 
         $signed = $model->load(Yii::$app->request->post()) && $model->signup(

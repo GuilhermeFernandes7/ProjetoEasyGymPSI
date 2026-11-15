@@ -39,7 +39,8 @@ class UserForm extends Model
             }
         };
 
-        return [
+
+        $rules = [
             [['nome', 'username', 'email', 'role', 'status'], 'required'],
             ['nome', 'string', 'max' => 100],
             ['username', 'string', 'min' => 2, 'max' => 255],
@@ -47,12 +48,17 @@ class UserForm extends Model
             ['email', 'string', 'max' => 255],
             ['username', 'unique', 'targetClass' => User::class, 'filter' => $ignoreSelf],
             ['email', 'unique', 'targetClass' => User::class, 'filter' => $ignoreSelf],
-            ['password', 'required', 'when' => fn () => empty($this->id)],
             ['password', 'string', 'min' => 8],
             ['role', 'in', 'range' => array_keys(self::roleLabels())],
             ['status', 'in', 'range' => array_keys(User::statusLabels())],
             ['role', 'validateSelf'],
         ];
+
+        if (empty($this->id)) {
+            $rules[] = ['password', 'required'];
+        }
+
+        return $rules;
     }
 
     public function attributeLabels(): array

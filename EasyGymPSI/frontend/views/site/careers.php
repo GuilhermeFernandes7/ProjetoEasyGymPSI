@@ -3,9 +3,12 @@
 declare(strict_types=1);
 
 /** @var yii\web\View $this */
+/** @var frontend\models\RegistrationForm $model */
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use common\widgets\Alert;
+use yii\bootstrap5\ActiveForm;
 
 $this->title = 'Careers';
 $this->params['fullWidth'] = true;
@@ -45,36 +48,24 @@ $this->params['fullWidth'] = true;
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <h2 class="probootstrap-heading mt0 mb50">Apply to <?= Html::encode(Yii::$app->name) ?></h2>
-                <?php /* TODO (back-end): este formulario ainda nao grava nada.
-                         Sera ligado ao registo: cria o utilizador em estado "pendente"
-                         com o role funcionario, e o admin aprova em "Users and access". */ ?>
-                <form class="probootstrap-form probootstrap-form-box" onsubmit="return false;">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="app-name">Name</label>
-                                <input type="text" class="form-control" id="app-name">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="app-email">Email</label>
-                                <input type="email" class="form-control" id="app-email">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="app-phone">Phone</label>
-                        <input type="text" class="form-control" id="app-phone">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="app-message">Message</label>
-                        <textarea rows="6" class="form-control" id="app-message"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary">Send application</button>
-                    </div>
-                </form>
+                <?= Alert::widget() ?>
+                <?php $form = ActiveForm::begin([
+                        'action' => Url::to(['/site/careers', '#' => 'apply']),
+                        'options' => ['class' => 'probootstrap-form probootstrap-form-box'],
+                ]); ?>
+                <div class="row">
+                    <div class="col-md-6"><?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?></div>
+                    <div class="col-md-6"><?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"><?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?></div>
+                    <div class="col-md-6"><?= $form->field($model, 'telefone')->textInput(['maxlength' => true]) ?></div>
+                </div>
+                <?= $form->field($model, 'password')->passwordInput() ?>
+                <div class="form-group mt-3">
+                    <?= Html::submitButton('Send application', ['class' => 'btn btn-primary']) ?>
+                </div>
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>
