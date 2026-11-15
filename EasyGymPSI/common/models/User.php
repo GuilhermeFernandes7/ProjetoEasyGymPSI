@@ -118,6 +118,22 @@ class User extends ActiveRecord implements IdentityInterface
 
         return $this->save(false, ['status', 'updated_at']);
     }
+    /**
+     * Role principal para o painel (menu e dashboard): admin > funcionario > cliente.
+     */
+    public function getPanelRole(): string
+    {
+        $auth = Yii::$app->authManager;
+
+        if ($auth->checkAccess($this->id, 'admin')) {
+            return 'admin';
+        }
+        if ($auth->checkAccess($this->id, 'funcionario')) {
+            return 'funcionario';
+        }
+
+        return 'cliente';
+    }
 
     /**
      * {@inheritdoc}

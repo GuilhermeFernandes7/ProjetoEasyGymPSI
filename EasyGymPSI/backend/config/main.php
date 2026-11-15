@@ -9,11 +9,18 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+    'name' => 'Easy Gym Leiria',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+        'assetManager' => [
+            'bundles' => [
+                \yii\bootstrap5\BootstrapAsset::class => ['sourcePath' => null, 'css' => [], 'js' => []],
+                \yii\bootstrap5\BootstrapPluginAsset::class => ['sourcePath' => null, 'css' => [], 'js' => []],
+            ],
+        ],
         'view' => [
             'theme' => [
                 'pathMap' => [
