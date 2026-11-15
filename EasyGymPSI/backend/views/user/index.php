@@ -16,19 +16,18 @@ $this->title = 'Users and access';
 $this->params['breadcrumbs'][] = $this->title;
 
 $statusClass = [
-    User::STATUS_ACTIVE => 'bg-success',
-    User::STATUS_PENDING => 'bg-warning text-dark',
-    User::STATUS_SUSPENDED => 'bg-dark',
-    User::STATUS_INACTIVE => 'bg-secondary',
+    User::STATUS_ACTIVE => 'badge-success',
+    User::STATUS_PENDING => 'badge-warning',
+    User::STATUS_SUSPENDED => 'badge-dark',
+    User::STATUS_INACTIVE => 'badge-secondary',
 ];
 ?>
 <div class="user-index">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1><?= Html::encode($this->title) ?></h1>
+    <div class="mb-3 text-right">
         <?= Html::a('+ Add New User', ['create'], ['class' => 'btn btn-dark']) ?>
     </div>
 
-    <?= Html::beginForm(['index'], 'get', ['class' => 'row g-2 mb-3']) ?>
+    <?= Html::beginForm(['index'], 'get', ['class' => 'form-row mb-3']) ?>
     <div class="col-md-6">
         <?= Html::activeTextInput($searchModel, 'q', ['class' => 'form-control', 'placeholder' => 'Search by name or email...']) ?>
     </div>
@@ -70,7 +69,7 @@ $statusClass = [
                 'value' => static fn (User $m) => Html::tag(
                     'span',
                     Html::encode($m->getStatusLabel()),
-                    ['class' => 'badge ' . ($statusClass[$m->status] ?? 'bg-secondary')],
+                    ['class' => 'badge ' . ($statusClass[$m->status] ?? 'badge-secondary')],
                 ),
             ],
             [

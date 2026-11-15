@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 use backend\models\UserForm;
 use common\models\User;
-use yii\bootstrap5\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 ?>
 <div class="user-form">

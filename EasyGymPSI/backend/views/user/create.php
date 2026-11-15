@@ -11,5 +11,5 @@ $this->title = 'Create user';
 $this->params['breadcrumbs'][] = ['label' => 'Users and access', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-    <h1><?= Html::encode($this->title) ?></h1>
+
 <?= $this->render('_form', ['model' => $model]) ?>

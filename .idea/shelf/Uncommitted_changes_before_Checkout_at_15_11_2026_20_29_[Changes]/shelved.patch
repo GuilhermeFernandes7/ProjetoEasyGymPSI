@@ -1,0 +1,92 @@
+Index: EasyGymPSI/backend/views/user/create.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\ndeclare(strict_types=1);\r\n\r\n/** @var yii\\web\\View $this */\r\n/** @var backend\\models\\UserForm $model */\r\n\r\nuse yii\\helpers\\Html;\r\n\r\n$this->title = 'Create user';\r\n$this->params['breadcrumbs'][] = ['label' => 'Users and access', 'url' => ['index']];\r\n$this->params['breadcrumbs'][] = $this->title;\r\n?>\r\n    <h1><?= Html::encode($this->title) ?></h1>\r\n<?= $this->render('_form', ['model' => $model]) ?>
+===================================================================
+diff --git a/EasyGymPSI/backend/views/user/create.php b/EasyGymPSI/backend/views/user/create.php
+--- a/EasyGymPSI/backend/views/user/create.php	(revision 2b69e444e3fbdfe309529018b1fe380ffd7d9c54)
++++ b/EasyGymPSI/backend/views/user/create.php	(date 1794773567681)
+@@ -11,5 +11,5 @@
+ $this->params['breadcrumbs'][] = ['label' => 'Users and access', 'url' => ['index']];
+ $this->params['breadcrumbs'][] = $this->title;
+ ?>
+-    <h1><?= Html::encode($this->title) ?></h1>
++
+ <?= $this->render('_form', ['model' => $model]) ?>
+\ No newline at end of file
+Index: EasyGymPSI/backend/views/user/update.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\ndeclare(strict_types=1);\r\n\r\n/** @var yii\\web\\View $this */\r\n/** @var backend\\models\\UserForm $model */\r\n\r\nuse yii\\helpers\\Html;\r\n\r\n$this->title = 'Edit user';\r\n$this->params['breadcrumbs'][] = ['label' => 'Users and access', 'url' => ['index']];\r\n$this->params['breadcrumbs'][] = $this->title;\r\n?>\r\n    <h1><?= Html::encode($this->title) ?></h1>\r\n<?= $this->render('_form', ['model' => $model]) ?>
+===================================================================
+diff --git a/EasyGymPSI/backend/views/user/update.php b/EasyGymPSI/backend/views/user/update.php
+--- a/EasyGymPSI/backend/views/user/update.php	(revision 2b69e444e3fbdfe309529018b1fe380ffd7d9c54)
++++ b/EasyGymPSI/backend/views/user/update.php	(date 1794773567676)
+@@ -11,5 +11,5 @@
+ $this->params['breadcrumbs'][] = ['label' => 'Users and access', 'url' => ['index']];
+ $this->params['breadcrumbs'][] = $this->title;
+ ?>
+-    <h1><?= Html::encode($this->title) ?></h1>
++
+ <?= $this->render('_form', ['model' => $model]) ?>
+\ No newline at end of file
+Index: EasyGymPSI/backend/views/user/index.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\ndeclare(strict_types=1);\r\n\r\n/** @var yii\\web\\View $this */\r\n/** @var backend\\models\\UserSearch $searchModel */\r\n/** @var yii\\data\\ActiveDataProvider $dataProvider */\r\n\r\nuse backend\\models\\UserForm;\r\nuse common\\models\\User;\r\nuse yii\\grid\\ActionColumn;\r\nuse yii\\grid\\GridView;\r\nuse yii\\helpers\\Html;\r\n\r\n$this->title = 'Users and access';\r\n$this->params['breadcrumbs'][] = $this->title;\r\n\r\n$statusClass = [\r\n    User::STATUS_ACTIVE => 'bg-success',\r\n    User::STATUS_PENDING => 'bg-warning text-dark',\r\n    User::STATUS_SUSPENDED => 'bg-dark',\r\n    User::STATUS_INACTIVE => 'bg-secondary',\r\n];\r\n?>\r\n<div class=\"user-index\">\r\n    <div class=\"d-flex justify-content-between align-items-center mb-3\">\r\n        <h1><?= Html::encode($this->title) ?></h1>\r\n        <?= Html::a('+ Add New User', ['create'], ['class' => 'btn btn-dark']) ?>\r\n    </div>\r\n\r\n    <?= Html::beginForm(['index'], 'get', ['class' => 'row g-2 mb-3']) ?>\r\n    <div class=\"col-md-6\">\r\n        <?= Html::activeTextInput($searchModel, 'q', ['class' => 'form-control', 'placeholder' => 'Search by name or email...']) ?>\r\n    </div>\r\n    <div class=\"col-md-2\">\r\n        <?= Html::activeDropDownList($searchModel, 'role', UserForm::roleLabels(), ['class' => 'form-control', 'prompt' => 'Role']) ?>\r\n    </div>\r\n    <div class=\"col-md-2\">\r\n        <?= Html::activeDropDownList($searchModel, 'status', User::statusLabels(), ['class' => 'form-control', 'prompt' => 'Status']) ?>\r\n    </div>\r\n    <div class=\"col-md-2\">\r\n        <?= Html::submitButton('Filter', ['class' => 'btn btn-outline-dark']) ?>\r\n        <?= Html::a('Clear', ['index'], ['class' => 'btn btn-link']) ?>\r\n    </div>\r\n    <?= Html::endForm() ?>\r\n\r\n    <?= GridView::widget([\r\n        'dataProvider' => $dataProvider,\r\n        'tableOptions' => ['class' => 'table table-striped align-middle'],\r\n        'summary' => 'Showing {begin}-{end} of {totalCount} users',\r\n        'columns' => [\r\n            [\r\n                'attribute' => 'nome',\r\n                'label' => 'Name',\r\n                'value' => static fn (User $m) => $m->perfil?->nome ?? $m->username,\r\n            ],\r\n            ['attribute' => 'email', 'label' => 'Email'],\r\n            [\r\n                'label' => 'Role',\r\n                'value' => static function (User $m) {\r\n                    $role = $m->getRoleName();\r\n\r\n                    return $role === null ? '-' : (UserForm::roleLabels()[$role] ?? $role);\r\n                },\r\n            ],\r\n            [\r\n                'attribute' => 'status',\r\n                'label' => 'Status',\r\n                'format' => 'raw',\r\n                'value' => static fn (User $m) => Html::tag(\r\n                    'span',\r\n                    Html::encode($m->getStatusLabel()),\r\n                    ['class' => 'badge ' . ($statusClass[$m->status] ?? 'bg-secondary')],\r\n                ),\r\n            ],\r\n            [\r\n                'class' => ActionColumn::class,\r\n                'header' => 'Actions',\r\n                'template' => '{update} {activate} {deactivate} {delete}',\r\n                'buttons' => [\r\n                    'update' => static fn ($url) => Html::a('Edit', $url, ['class' => 'btn btn-sm btn-outline-dark']),\r\n                    'activate' => static fn ($url) => Html::a('Activate', $url, [\r\n                        'class' => 'btn btn-sm btn-outline-success',\r\n                        'data-method' => 'post',\r\n                    ]),\r\n                    'deactivate' => static fn ($url) => Html::a('Deactivate', $url, [\r\n                        'class' => 'btn btn-sm btn-outline-secondary',\r\n                        'data-method' => 'post',\r\n                        'data-confirm' => 'Deactivate this user? You can activate it again later.',\r\n                    ]),\r\n                    'delete' => static fn ($url) => Html::a('Delete', $url, [\r\n                        'class' => 'btn btn-sm btn-outline-danger',\r\n                        'data-method' => 'post',\r\n                        'data-confirm' => 'Delete this user? It will disappear from this list.',\r\n                    ]),\r\n                ],\r\n                'visibleButtons' => [\r\n                    'activate' => static fn (User $m) => $m->status !== User::STATUS_ACTIVE,\r\n                    'deactivate' => static fn (User $m) => $m->status !== User::STATUS_INACTIVE\r\n                        && (int) $m->id !== (int) Yii::$app->user->id,\r\n                    'delete' => static fn (User $m) => (int) $m->id !== (int) Yii::$app->user->id,\r\n                ],\r\n            ],\r\n        ],\r\n    ]) ?>\r\n</div>
+===================================================================
+diff --git a/EasyGymPSI/backend/views/user/index.php b/EasyGymPSI/backend/views/user/index.php
+--- a/EasyGymPSI/backend/views/user/index.php	(revision 2b69e444e3fbdfe309529018b1fe380ffd7d9c54)
++++ b/EasyGymPSI/backend/views/user/index.php	(date 1794773995040)
+@@ -16,19 +16,18 @@
+ $this->params['breadcrumbs'][] = $this->title;
+ 
+ $statusClass = [
+-    User::STATUS_ACTIVE => 'bg-success',
+-    User::STATUS_PENDING => 'bg-warning text-dark',
+-    User::STATUS_SUSPENDED => 'bg-dark',
+-    User::STATUS_INACTIVE => 'bg-secondary',
++    User::STATUS_ACTIVE => 'badge-success',
++    User::STATUS_PENDING => 'badge-warning',
++    User::STATUS_SUSPENDED => 'badge-dark',
++    User::STATUS_INACTIVE => 'badge-secondary',
+ ];
+ ?>
+ <div class="user-index">
+-    <div class="d-flex justify-content-between align-items-center mb-3">
+-        <h1><?= Html::encode($this->title) ?></h1>
++    <div class="mb-3 text-right">
+         <?= Html::a('+ Add New User', ['create'], ['class' => 'btn btn-dark']) ?>
+     </div>
+ 
+-    <?= Html::beginForm(['index'], 'get', ['class' => 'row g-2 mb-3']) ?>
++    <?= Html::beginForm(['index'], 'get', ['class' => 'form-row mb-3']) ?>
+     <div class="col-md-6">
+         <?= Html::activeTextInput($searchModel, 'q', ['class' => 'form-control', 'placeholder' => 'Search by name or email...']) ?>
+     </div>
+@@ -70,7 +69,7 @@
+                 'value' => static fn (User $m) => Html::tag(
+                     'span',
+                     Html::encode($m->getStatusLabel()),
+-                    ['class' => 'badge ' . ($statusClass[$m->status] ?? 'bg-secondary')],
++                    ['class' => 'badge ' . ($statusClass[$m->status] ?? 'badge-secondary')],
+                 ),
+             ],
+             [
+Index: EasyGymPSI/backend/views/user/_form.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\ndeclare(strict_types=1);\r\n\r\n/** @var yii\\web\\View $this */\r\n/** @var backend\\models\\UserForm $model */\r\n\r\nuse backend\\models\\UserForm;\r\nuse common\\models\\User;\r\nuse yii\\bootstrap5\\ActiveForm;\r\nuse yii\\helpers\\Html;\r\n?>\r\n<div class=\"user-form\">\r\n    <?php $form = ActiveForm::begin(); ?>\r\n\r\n    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>\r\n    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>\r\n    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>\r\n    <?= $form->field($model, 'password')->passwordInput()->hint(\r\n        $model->id ? 'Leave blank to keep the current password.' : 'Minimum 8 characters.',\r\n    ) ?>\r\n\r\n    <div class=\"row\">\r\n        <div class=\"col-md-6\">\r\n            <?= $form->field($model, 'role')->dropDownList(UserForm::roleLabels(), ['prompt' => 'Select role']) ?>\r\n        </div>\r\n        <div class=\"col-md-6\">\r\n            <?= $form->field($model, 'status')->dropDownList(User::statusLabels()) ?>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"mt-3\">\r\n        <?= Html::a('Cancel', ['index'], ['class' => 'btn btn-outline-secondary']) ?>\r\n        <?= Html::submitButton('Save user', ['class' => 'btn btn-dark']) ?>\r\n    </div>\r\n\r\n    <?php ActiveForm::end(); ?>\r\n</div>
+===================================================================
+diff --git a/EasyGymPSI/backend/views/user/_form.php b/EasyGymPSI/backend/views/user/_form.php
+--- a/EasyGymPSI/backend/views/user/_form.php	(revision 2b69e444e3fbdfe309529018b1fe380ffd7d9c54)
++++ b/EasyGymPSI/backend/views/user/_form.php	(date 1794773532995)
+@@ -7,7 +7,7 @@
+ 
+ use backend\models\UserForm;
+ use common\models\User;
+-use yii\bootstrap5\ActiveForm;
++use yii\bootstrap4\ActiveForm;
+ use yii\helpers\Html;
+ ?>
+ <div class="user-form">
