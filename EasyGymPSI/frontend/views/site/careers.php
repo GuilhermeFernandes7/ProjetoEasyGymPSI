@@ -32,12 +32,22 @@ $this->params['fullWidth'] = true;
         <h2 class="probootstrap-heading mt0 mb50">Open roles</h2>
         <div class="row">
             <div class="col-md-12">
-                <?php for ($i = 0; $i < 3; $i++): ?>
-                    <div class="probootstrap-box d-flex align-items-center justify-content-between">
-                        <span class="eg-todo">[role title]</span>
+                <?php
+                $roles = [
+                        ['Personal Trainer', 'Full-time · Leiria', 'Create training plans and follow our members\' progress.'],
+                        ['Front Desk Receptionist', 'Part-time · Leiria', 'Welcome members, manage registrations and answer questions.'],
+                        ['Group Classes Instructor', 'Part-time · Leiria', 'Lead group classes such as HIIT, spinning and yoga.'],
+                ];
+                foreach ($roles as [$title, $type, $desc]): ?>
+                    <div class="probootstrap-box mb-3 d-flex align-items-center justify-content-between">
+                        <div>
+                            <h4 class="mb-1"><?= Html::encode($title) ?></h4>
+                            <small class="text-muted"><?= Html::encode($type) ?></small>
+                            <p class="mb-0"><?= Html::encode($desc) ?></p>
+                        </div>
                         <a href="#apply" class="btn btn-primary">Apply</a>
                     </div>
-                <?php endfor ?>
+                <?php endforeach ?>
             </div>
         </div>
     </div>

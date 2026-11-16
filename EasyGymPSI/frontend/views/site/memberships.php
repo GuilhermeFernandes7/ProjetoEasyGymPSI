@@ -16,9 +16,18 @@ $this->params['fullWidth'] = true;
 // Nomes dos planos tirados dos wireframes (Basic / Premium / Student).
 // Precos e beneficios ainda por definir.
 $plans = [
-    ['name' => 'Basic', 'popular' => false],
-    ['name' => 'Premium', 'popular' => true],
-    ['name' => 'Student', 'popular' => false],
+        [
+                'name' => 'Basic', 'popular' => false, 'price' => '19,99 €',
+                'benefits' => ['Access to the gym floor', 'Member area and mobile app', 'Online class booking'],
+        ],
+        [
+                'name' => 'Premium', 'popular' => true, 'price' => '29,99 €',
+                'benefits' => ['Everything in Basic', 'Unlimited group classes', 'Personalised workout plan', 'Quarterly PT evaluation'],
+        ],
+        [
+                'name' => 'Student', 'popular' => false, 'price' => '14,99 €',
+                'benefits' => ['Access to the gym floor', 'Member area and mobile app', 'Valid student card required'],
+        ],
 ];
 ?>
 <section class="probootstrap-intro probootstrap-intro-inner" style="background-image: url(<?= Url::to('@web/trainer/img/hero_bg_1_b.jpg') ?>);">
@@ -44,13 +53,13 @@ $plans = [
                         <div class="probootstrap-pricing<?= $plan['popular'] ? ' popular' : '' ?>">
                             <h3><?= Html::encode($plan['name']) ?></h3>
                             <div class="probootstrap-price-wrap">
-                                <span class="probootstrap-price eg-todo">[price]</span>
+                                <span class="probootstrap-price"><?= Html::encode($plan['price']) ?></span>
                                 <span class="probootstrap-price-per-month">per month</span>
                             </div>
                             <ul>
-                                <li class="eg-todo">[benefit]</li>
-                                <li class="eg-todo">[benefit]</li>
-                                <li class="eg-todo">[benefit]</li>
+                                <?php foreach ($plan['benefits'] as $benefit): ?>
+                                    <li><?= Html::encode($benefit) ?></li>
+                                <?php endforeach ?>
                             </ul>
                             <p><a href="#pre-registration" class="btn btn-primary">Choose <?= Html::encode($plan['name']) ?></a></p>
                         </div>

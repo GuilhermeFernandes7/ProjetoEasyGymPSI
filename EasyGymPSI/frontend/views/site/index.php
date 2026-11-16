@@ -41,7 +41,7 @@ $img = static fn (string $file): string => Url::to('@web/trainer/img/' . $file);
                     <a href="<?= Url::to(['/site/memberships']) ?>"><img src="<?= $img('img_1.jpg') ?>" alt="Group classes" class="img-fluid rounded"></a>
                     <h3>Group classes</h3>
                     <p>Book your spot online.</p>
-                    <p class="eg-todo">[description]</p>
+                    <p>HIIT, spinning, yoga and more. Check the schedule and book your spot online.</p>
                 </div>
             </div>
             <div class="col-md-6 col-lg-3 mb30">
@@ -49,7 +49,7 @@ $img = static fn (string $file): string => Url::to('@web/trainer/img/' . $file);
                     <a href="<?= Url::to(['/site/memberships']) ?>"><img src="<?= $img('img_2.jpg') ?>" alt="Personal training" class="img-fluid rounded"></a>
                     <h3>Personal training</h3>
                     <p>Follow-up by a personal trainer.</p>
-                    <p class="eg-todo">[description]</p>
+                    <p>One-to-one sessions with our trainers, with a plan built around your goals.</p>
                 </div>
             </div>
             <div class="col-md-6 col-lg-3 mb30">
@@ -57,7 +57,7 @@ $img = static fn (string $file): string => Url::to('@web/trainer/img/' . $file);
                     <a href="<?= Url::to(['/site/memberships']) ?>"><img src="<?= $img('img_3.jpg') ?>" alt="Workout plans" class="img-fluid rounded"></a>
                     <h3>Workout plans</h3>
                     <p>A plan made for you.</p>
-                    <p class="eg-todo">[description]</p>
+                    <p>Plans prescribed by your trainer, available in the member area and in the app.</p>
                 </div>
             </div>
             <div class="col-md-6 col-lg-3 mb30">
@@ -65,7 +65,7 @@ $img = static fn (string $file): string => Url::to('@web/trainer/img/' . $file);
                     <a href="<?= Url::to(['/site/memberships']) ?>"><img src="<?= $img('img_4.jpg') ?>" alt="Physical evaluations" class="img-fluid rounded"></a>
                     <h3>Physical evaluations</h3>
                     <p>Track your progress.</p>
-                    <p class="eg-todo">[description]</p>
+                    <p>Regular evaluations of weight, body fat and muscle mass, to see your progress.</p>
                 </div>
             </div>
         </div>
