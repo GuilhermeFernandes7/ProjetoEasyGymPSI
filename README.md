@@ -38,7 +38,7 @@ Pending, que o admin ativa em "Users and access".
 
 ## Fase 1 - implementado
 RBAC, registo integrado no RBAC, gestão de utilizadores com soft delete
-(Deactivate/Activate/Delete), AdminLTE no back-office com menu por role,
+(Deactivate/Activate/Delete), página de detalhe do utilizador (View), AdminLTE no back-office com menu por role,
 template do front-office.
 
 ## Notas

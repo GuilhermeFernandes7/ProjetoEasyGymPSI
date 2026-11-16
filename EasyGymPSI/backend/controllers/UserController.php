@@ -94,6 +94,11 @@ class UserController extends Controller
         return $this->changeStatus($id, 'softDelete', 'User deleted.');
     }
 
+    public function actionView(int $id): string
+    {
+        return $this->render('view', ['model' => $this->findUser($id)]);
+    }
+
     private function changeStatus(int $id, string $method, string $message): Response
     {
         $user = $this->findUser($id);

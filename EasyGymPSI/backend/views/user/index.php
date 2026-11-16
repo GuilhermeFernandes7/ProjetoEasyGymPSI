@@ -75,8 +75,9 @@ $statusClass = [
             [
                 'class' => ActionColumn::class,
                 'header' => 'Actions',
-                'template' => '{update} {activate} {deactivate} {delete}',
+                'template' => '{view} {update} {activate} {deactivate} {delete}',
                 'buttons' => [
+                    'view' => static fn ($url) => Html::a('View', $url, ['class' => 'btn btn-sm btn-outline-info']),
                     'update' => static fn ($url) => Html::a('Edit', $url, ['class' => 'btn btn-sm btn-outline-dark']),
                     'activate' => static fn ($url) => Html::a('Activate', $url, [
                         'class' => 'btn btn-sm btn-outline-success',

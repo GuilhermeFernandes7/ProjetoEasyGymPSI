@@ -113,7 +113,7 @@ $this->title = 'About and Contacts';
             <!-- Address Box -->
             <div class="card mb-3 p-3 shadow-sm">
                 <strong class="mb-1">Easy gym Leiria</strong>
-                <span class="eg-todo">Av. da malaposta 123, 2400-000 Leiria</span>
+                <span>Av. da malaposta 123, 2400-000 Leiria</span>
             </div>
 
             <!-- Operating Hours Box -->
