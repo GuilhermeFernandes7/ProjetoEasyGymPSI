@@ -14,13 +14,6 @@ $role = $identity?->getPanelRole();
 
 // Itens sem 'url' ainda nao tem pagina (ficam para a Fase 2).
 $menus = [
-    'cliente' => [
-        ['label' => 'Overview', 'icon' => 'tachometer-alt', 'url' => ['/site/index']],
-        ['label' => 'Membership', 'icon' => 'id-card'],
-        ['label' => 'Billing', 'icon' => 'credit-card'],
-        ['label' => 'Invoices', 'icon' => 'file-invoice'],
-        ['label' => 'Freeze', 'icon' => 'snowflake'],
-    ],
     'funcionario' => [
         ['label' => 'Overview', 'icon' => 'tachometer-alt', 'url' => ['/site/index']],
         ['label' => 'Clients', 'icon' => 'users'],
@@ -38,7 +31,7 @@ $menus = [
         ['label' => 'Reports', 'icon' => 'chart-bar'],
     ],
 ];
-$items = $role !== null ? $menus[$role] : [];
+$items = $role !== null ? ($menus[$role] ?? []) : [];
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="<?= Html::encode(Yii::$app->homeUrl) ?>" class="brand-link">

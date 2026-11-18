@@ -88,7 +88,12 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            if (Yii::$app->user->can('loginBackend')) {
+                return $this->goBack();
+            }
+
+            Yii::$app->user->logout();
+            $model->addError('username', 'This account does not have access to the back-office.');
         }
 
         $model->password = '';

@@ -62,38 +62,36 @@ class RegistrationForm extends Model
         $auth = Yii::$app->authManager;
         $role = $auth->getRole($this->role);
         if ($role === null) {
-            throw new \RuntimeException('RBAC role "' . $this->role . '" does not exist. Run: php yii migrate');
+            throw new \RuntimeException('RBAC role "' . $this->role . '" does not exist. Run: php yii rbac/init');
         }
 
-        $transaction = Yii::$app->db->beginTransaction();
+        $user = new User();
+        $user->username = $this->username;
+        $user->email = $this->email;
+        $user->status = User::STATUS_PENDING;
+        $user->setPassword($this->password);
+        $user->generateAuthKey();
 
-        try {
-            $user = new User();
-            $user->username = $this->username;
-            $user->email = $this->email;
-            $user->status = User::STATUS_PENDING;
-            $user->setPassword($this->password);
-            $user->generateAuthKey();
-            if (!$user->save(false)) {
-                throw new \RuntimeException('Could not save user.');
-            }
+        $perfil = new PerfilUtilizador();
+        $perfil->nome = $this->nome;
+        $perfil->telefone = $this->telefone ?: null;
 
-            $perfil = new PerfilUtilizador();
-            $perfil->user_id = $user->id;
-            $perfil->nome = $this->nome;
-            $perfil->telefone = $this->telefone ?: null;
-            if (!$perfil->save()) {
-                throw new \RuntimeException('Could not save profile.');
-            }
-
-            $auth->assign($role, $user->id);
-
-            $transaction->commit();
-
-            return true;
-        } catch (\Throwable $e) {
-            $transaction->rollBack();
-            throw $e;
+        if (!$perfil->validate(['nome', 'telefone'])) {
+            return false;
         }
+
+        if (!$user->save(false)) {
+            return false;
+        }
+
+        $perfil->user_id = $user->id;
+        if (!$perfil->save()) {
+            $user->delete();
+            return false;
+        }
+
+        $auth->assign($role, $user->id);
+
+        return true;
     }
 }
