@@ -15,7 +15,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
- * Gestao de utilizadores (so para quem tem a permissao gerirSistema, ou seja, o admin).
+ * Gestao de utilizadores (so para quem tem a permissoes de utilizador (so o admin), ou seja, o admin).
  */
 class UserController extends Controller
 {
@@ -25,7 +25,10 @@ class UserController extends Controller
             'access' => [
                 'class' => AccessControl::class,
                 'rules' => [
-                    ['allow' => true, 'roles' => ['gerirSistema']],
+                    ['allow' => true, 'actions' => ['index', 'view'], 'roles' => ['verUtilizador']],
+                    ['allow' => true, 'actions' => ['create'], 'roles' => ['criarUtilizador']],
+                    ['allow' => true, 'actions' => ['update', 'activate', 'deactivate'], 'roles' => ['editarUtilizador']],
+                    ['allow' => true, 'actions' => ['delete'], 'roles' => ['apagarUtilizador']],
                 ],
             ],
             'verbs' => [
@@ -34,6 +37,7 @@ class UserController extends Controller
             ],
         ];
     }
+
 
     public function actionIndex(): string
     {

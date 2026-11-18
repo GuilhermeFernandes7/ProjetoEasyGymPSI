@@ -107,44 +107,53 @@ class UserForm extends Model
             return null;
         }
 
-        $transaction = Yii::$app->db->beginTransaction();
-
-        try {
-            $user = $this->id ? User::findOne($this->id) : new User();
-            if ($user === null) {
-                throw new \RuntimeException('User not found.');
-            }
-
-            $user->username = $this->username;
-            $user->email = $this->email;
-            $user->status = (int) $this->status;
-
-            if ($user->isNewRecord) {
-                $user->generateAuthKey();
-            }
-            if ($this->password !== null && $this->password !== '') {
-                $user->setPassword($this->password);
-            }
-            if (!$user->save(false)) {
-                throw new \RuntimeException('Could not save user.');
-            }
-
-            $perfil = $user->perfil ?? new PerfilUtilizador(['user_id' => $user->id]);
-            $perfil->nome = $this->nome;
-            if (!$perfil->save()) {
-                throw new \RuntimeException('Could not save profile.');
-            }
-
-            $auth = Yii::$app->authManager;
-            $auth->revokeAll($user->id);
-            $auth->assign($auth->getRole($this->role), $user->id);
-
-            $transaction->commit();
-
-            return $user;
-        } catch (\Throwable $e) {
-            $transaction->rollBack();
-            throw $e;
+        $auth = Yii::$app->authManager;
+        $role = $auth->getRole($this->role);
+        if ($role === null) {
+            $this->addError('role', 'Role not found. Run: php yii rbac/init');
+            return null;
         }
+
+        $user = $this->id ? User::findOne($this->id) : new User();
+        if ($user === null) {
+            return null;
+        }
+        $isNew = $user->isNewRecord;
+
+        $user->username = $this->username;
+        $user->email = $this->email;
+        $user->status = (int) $this->status;
+        if ($isNew) {
+            $user->generateAuthKey();
+        }
+        if ($this->password !== null && $this->password !== '') {
+            $user->setPassword($this->password);
+        }
+
+        $perfil = $user->perfil ?? new PerfilUtilizador();
+        $perfil->nome = $this->nome;
+        if (!$perfil->validate(['nome'])) {
+            $this->addError('nome', 'Invalid name.');
+            return null;
+        }
+
+        if (!$user->save(false)) {
+            $this->addError('username', 'Could not save the user.');
+            return null;
+        }
+
+        $perfil->user_id = $user->id;
+        if (!$perfil->save()) {
+            if ($isNew) {
+                $user->delete();
+            }
+            $this->addError('nome', 'Could not save the profile.');
+            return null;
+        }
+
+        $auth->revokeAll($user->id);
+        $auth->assign($role, $user->id);
+
+        return $user;
     }
 }

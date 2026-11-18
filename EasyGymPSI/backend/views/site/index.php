@@ -21,15 +21,10 @@ $boxes = match ($role) {
             ['Active members', '—', 'users', 'bg-success'],
             ['Pending pre-registrations', (string) User::find()->where(['status' => User::STATUS_PENDING])->count(), 'user-clock', 'bg-warning'],
     ],
-    'funcionario' => [
+    default => [
             ['Total active clients', '—', 'users', 'bg-info'],
             ['Pending evaluations', '—', 'heartbeat', 'bg-warning'],
             ['Sessions today', '—', 'calendar-day', 'bg-success'],
-    ],
-    default => [
-            ['Membership plan', '—', 'id-card', 'bg-info'],
-            ['Balance due', '—', 'credit-card', 'bg-warning'],
-            ['Invoices', '—', 'file-invoice', 'bg-success'],
     ],
 };
 ?>

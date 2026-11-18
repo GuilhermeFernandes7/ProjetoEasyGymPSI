@@ -2,7 +2,7 @@
 
 # Easy Gym Leiria - PLSI (Fase 1)
 
-Grupo: [Guilherme Fernandes - nº2024144331] / [Salvador Santos - nº2025186445] / [Gabriel Silvestre - nº2024144221]
+Grupo: [Guilherme Fernandes - nº2024144331] 
 
 ## Requisitos
 PHP 8.x, MySQL 8, Apache com mod_rewrite (WAMP).
