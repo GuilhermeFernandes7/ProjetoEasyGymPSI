@@ -108,7 +108,9 @@ class SiteController extends Controller
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            $default = Yii::$app->user->can('verAreaCliente') ? ['/client/index'] : null;
+
+            return $this->goBack($default);
         }
 
         $model->password = '';

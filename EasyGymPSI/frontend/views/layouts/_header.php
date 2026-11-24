@@ -9,15 +9,11 @@ use yii\helpers\Html;
 
 $route = Yii::$app->controller->route;
 
-$backendUrl = Yii::$app->params['backendUrl']
-    ?? str_replace('/frontend/web', '/backend/web', rtrim(Yii::$app->request->baseUrl, '/'));
-
-// [rotulo, rota]
 $items = [
-    ['Home', 'site/index'],
-    ['Memberships', 'site/memberships'],
-    ['About and Contacts', 'site/about'],
-    ['Careers', 'site/careers'],
+        ['Home', 'site/index'],
+        ['Memberships', 'site/memberships'],
+        ['About and Contacts', 'site/about'],
+        ['Careers', 'site/careers'],
 ];
 ?>
 <header role="banner" class="probootstrap-header<?= $solid ? ' probootstrap-header-solid' : '' ?>">
@@ -35,15 +31,22 @@ $items = [
                     </li>
                 <?php endforeach ?>
 
+                <?php if (!Yii::$app->user->isGuest && Yii::$app->user->can('verAreaCliente')): ?>
+                    <li<?= str_starts_with($route, 'client/') ? ' class="active"' : '' ?>>
+                        <?= Html::a('My area', ['/client/index']) ?>
+                    </li>
+                <?php endif ?>
+
                 <?php if (Yii::$app->user->isGuest): ?>
-                    <li class="probootstrap-cta">
-                        <?= Html::a('Login', $backendUrl . '/site/login') ?>                    </li>
+                    <li class="probootstrap-cta<?= $route === 'site/login' ? ' active' : '' ?>">
+                        <?= Html::a('Login', ['/site/login']) ?>
+                    </li>
                 <?php else: ?>
                     <li class="probootstrap-cta">
                         <?= Html::beginForm(['/site/logout'], 'post') ?>
                         <?= Html::submitButton(
-                            'Logout (' . Html::encode(Yii::$app->user->identity->username) . ')',
-                            ['class' => 'nav-logout'],
+                                'Logout (' . Html::encode(Yii::$app->user->identity->username) . ')',
+                                ['class' => 'nav-logout'],
                         ) ?>
                         <?= Html::endForm() ?>
                     </li>
