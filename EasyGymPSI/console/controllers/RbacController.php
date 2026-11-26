@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace console\controllers;
 
+use common\models\User;
 use Yii;
 use yii\console\Controller;
 use yii\console\ExitCode;
-use yii\db\Query;
 
 class RbacController extends Controller
 {
@@ -15,11 +15,11 @@ class RbacController extends Controller
     {
         $auth = Yii::$app->authManager;
 
-        // guarda os roles ja atribuidos, para os repor no fim
-        $assignments = (new Query())
-            ->select(['item_name', 'user_id'])
-            ->from('auth_assignment')
-            ->all();
+        // guarda quem tem cada role, pela API, para repor no fim
+        $assignments = [];
+        foreach ($auth->getRoles() as $role) {
+            $assignments[$role->name] = $auth->getUserIdsByRole($role->name);
+        }
 
         $auth->removeAll();
 
@@ -72,19 +72,41 @@ class RbacController extends Controller
             $auth->addChild($admin, $permissions[$name]);
         }
 
-        foreach ($assignments as $row) {
-            $role = $auth->getRole($row['item_name']);
-            if ($role !== null) {
-                $auth->assign($role, $row['user_id']);
+        foreach ($assignments as $roleName => $userIds) {
+            $role = $auth->getRole($roleName);
+            if ($role === null) {
+                continue;
+            }
+            foreach ($userIds as $userId) {
+                $auth->assign($role, $userId);
             }
         }
 
-        $adminId = (new Query())->select('id')->from('{{%user}}')->where(['username' => 'admin'])->scalar();
-        if ($adminId && $auth->getAssignment('admin', $adminId) === null) {
-            $auth->assign($admin, $adminId);
+        $this->stdout("RBAC inicializado.\n");
+
+        return ExitCode::OK;
+    }
+
+    /**
+     * Atribuicao dinamica de um role: php yii rbac/assign <username> <role>
+     */
+    public function actionAssign(string $username, string $roleName): int
+    {
+        $auth = Yii::$app->authManager;
+        $role = $auth->getRole($roleName);
+        $user = User::findOne(['username' => $username]);
+
+        if ($role === null || $user === null) {
+            $this->stderr("Utilizador ou role nao encontrado.\n");
+
+            return ExitCode::DATAERR;
         }
 
-        $this->stdout("RBAC inicializado.\n");
+        if ($auth->getAssignment($roleName, $user->id) === null) {
+            $auth->assign($role, $user->id);
+        }
+
+        $this->stdout("Role {$roleName} atribuido a {$username}.\n");
 
         return ExitCode::OK;
     }

@@ -94,12 +94,16 @@ $statusClass = [
                         'data-confirm' => 'Delete this user? It will disappear from this list.',
                     ]),
                 ],
-                'visibleButtons' => [
-                    'activate' => static fn (User $m) => $m->status !== User::STATUS_ACTIVE,
-                    'deactivate' => static fn (User $m) => $m->status !== User::STATUS_INACTIVE
-                        && (int) $m->id !== (int) Yii::$app->user->id,
-                    'delete' => static fn (User $m) => (int) $m->id !== (int) Yii::$app->user->id,
-                ],
+                    'visibleButtons' => [
+                            'view' => static fn () => Yii::$app->user->can('verUtilizador'),
+                            'update' => static fn () => Yii::$app->user->can('editarUtilizador'),
+                            'activate' => static fn (User $m) => Yii::$app->user->can('editarUtilizador') && $m->status !== User::STATUS_ACTIVE,
+                            'deactivate' => static fn (User $m) => Yii::$app->user->can('editarUtilizador')
+                                    && $m->status !== User::STATUS_INACTIVE
+                                    && (int) $m->id !== (int) Yii::$app->user->id,
+                            'delete' => static fn (User $m) => Yii::$app->user->can('apagarUtilizador')
+                                    && (int) $m->id !== (int) Yii::$app->user->id,
+                    ],
             ],
         ],
     ]) ?>
